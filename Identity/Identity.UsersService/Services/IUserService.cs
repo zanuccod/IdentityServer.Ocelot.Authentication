@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using UsersService.Model;
+using Identity.UsersService.Model;
 
-namespace UsersService.Services
+namespace Identity.UsersService.Services
 {
     public interface IUserService
     {

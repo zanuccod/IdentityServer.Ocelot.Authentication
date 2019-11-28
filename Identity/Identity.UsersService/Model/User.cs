@@ -1,4 +1,4 @@
-﻿namespace UsersService.Model
+﻿namespace Identity.UsersService.Model
 {
     public class User
     {

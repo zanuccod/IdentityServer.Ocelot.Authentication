@@ -6,7 +6,7 @@ using IdentityServer4.Services;
 using System.Security.Claims;
 using System.Collections.Generic;
 using IdentityModel;
-using UsersService.Services;
+using Identity.UsersService.Services;
 
 namespace Identity.IdentityServer.API.Services
 {

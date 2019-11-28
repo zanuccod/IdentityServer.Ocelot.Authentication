@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
-using UsersService.Services;
+using Identity.UsersService.Services;
 
 namespace Identity.IdentityServer.API.Services
 {

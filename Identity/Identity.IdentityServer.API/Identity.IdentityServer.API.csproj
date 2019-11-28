@@ -8,7 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UsersService\UsersService.csproj">
+    <ProjectReference Include="..\Identity.UsersService\Identity.UsersService.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
