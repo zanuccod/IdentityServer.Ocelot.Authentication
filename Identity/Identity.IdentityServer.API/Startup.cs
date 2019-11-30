@@ -36,13 +36,24 @@ namespace Identity.IdentityServer.API
                     })
                 .AddInMemoryApiResources(new List<ApiResource>
                 {
-                    // TODO: define webapi resources
-
+                    // defined in the startup.xs of ServicesOne.API
+                    new ApiResource("WebApi_ServiceOne")
+                        {
+                            ApiSecrets = {new Secret("web_api_service_one_key".Sha256())}
+                        }
                 })
+
                 .AddInMemoryClients(new List<Client>
                 {
-                    // TODO: define client resource
-
+                    // defined when ConsoleClient call identityServer to request the token
+                    new Client
+                        {
+                            ClientId = "ConsoleApp_ClientId",
+                            ClientSecrets = { new Secret("client_key".Sha256()) },
+                            AccessTokenType = AccessTokenType.Reference,
+                            AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                            AllowedScopes = { "WebApi_ServiceOne" },
+                        }
                 })
                 .AddProfileService<ProfileService>();
         }
