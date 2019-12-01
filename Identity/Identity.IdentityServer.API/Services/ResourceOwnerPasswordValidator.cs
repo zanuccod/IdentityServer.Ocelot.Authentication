@@ -26,6 +26,7 @@ namespace Identity.IdentityServer.API.Services
                 var user = await _userRepository.FindAsync(context.UserName);
                 if (user != null)
                 {
+                    // TODO: check also for username
                     if (user.Password.ToSha256() == context.Password)
                     {
                         var claims = new List<Claim>

@@ -19,6 +19,7 @@ namespace Clients.ConsoleClient
          *  Addresses
          *  Identity Server: https://localhost:5000;http://localhost:5001;
          *  ServiceOne: https://localhost:5002;http://localhost:5003;
+         *  ApiGateway: https://localhost:5004;http://localhost:5005;
          */
         static async Task MainAsync(string[] args)
         {
@@ -26,7 +27,8 @@ namespace Clients.ConsoleClient
 
             // Just a sample call with an invalid access token.
             // The expected response from this call is 401 Unauthorized
-            var apiResponse = await httpClient.GetAsync("https://localhost:5002/api/values");
+            //var apiResponse = await httpClient.GetAsync("https://localhost:5002/api/values");
+            var apiResponse = await httpClient.GetAsync("https://localhost:5004/api/values");
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "invalid_access_token");
 
             // The API is protected, let's ask the user for credentials and exchanged them with an access token
@@ -36,7 +38,7 @@ namespace Clients.ConsoleClient
                 Console.WriteLine("Connection aborted: Unauthorized");
                 Console.WriteLine();
 
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 // Ask User and password
                 Console.Write("Username:");
                 var username = Console.ReadLine();
@@ -60,20 +62,33 @@ namespace Clients.ConsoleClient
                 // there's no errors?
                 if (!identityServerResponse.IsError)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine();
-                    Console.WriteLine("SUCCESS!!");
                     Console.WriteLine();
                     Console.WriteLine("Access Token: ");
                     Console.WriteLine(identityServerResponse.AccessToken);
 
+
+
                     // Call the API with the correct access token
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", identityServerResponse.AccessToken);
-                    apiResponse = await httpClient.GetAsync("https://localhost:5002/api/values");
 
-                    Console.WriteLine();
-                    Console.WriteLine("API response:");
-                    Console.WriteLine(await apiResponse.Content.ReadAsStringAsync());
+                    //apiResponse = await httpClient.GetAsync("https://localhost:5002/api/values");
+                    apiResponse = await httpClient.GetAsync("https://localhost:5004/api/values");
+
+                    if (apiResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Connection aborted from ApiGateway: Unauthorized");
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine();
+                        Console.WriteLine("SUCCESS!!");
+                        Console.WriteLine();
+                        Console.WriteLine("API response:");
+                        Console.WriteLine(await apiResponse.Content.ReadAsStringAsync());
+                    }
                 }
                 else
                 {
